@@ -7,6 +7,8 @@ const deleteBtn = document.querySelector("#delete-btn")
 const inputTabBtn = document.querySelector("#input-tab-btn")
 const storedVideosLocal = JSON.parse(localStorage.getItem("myVideos"))
 const autoAddTab = document.querySelector("#auto-add-tab-btn")
+import { spawn as spawner } from 'child_process';
+
 
 if (storedVideosLocal) {
     myVideos = storedVideosLocal
@@ -55,37 +57,19 @@ function render(videos) {
     ulEl.innerHTML = listItems
 }
 
-//Download link parsing to python 
+
 function downloadVideo(videoLink) {
     console.log(videoLink)
-    fetch(videoLink)
-    .then(response => response.blob())
-    .then(blob => {
-        // Create a link element
-        const link = document.createElement('a');
 
-        // Create a Blob URL for the video blob
-        const url = URL.createObjectURL(blob);
+    const data_to_pass_in = 'Send this to python';
 
-        // Set the link's href to the Blob URL
-        link.href = url;
+    console.log('Data Sent to Python', data_to_pass_in);
 
-        // Set the download attribute with the desired file name
-        link.download = 'video.mp4';
+    const python_process = spawner('python3', ['download.py', data_to_pass_in]);
 
-        // Append the link to the document
-        document.body.appendChild(link);
-
-        // Trigger a click on the link to start the download
-        link.click();
-
-        // Remove the link from the document
-        document.body.removeChild(link);
-  })
-  .catch(error => {
-    console.error('Error downloading video:', error);
-  });
-
+    python_process.stdout.on('data', (data) => {
+        console.log('Data received from python script', data.toString());
+    });
 }
 
 
