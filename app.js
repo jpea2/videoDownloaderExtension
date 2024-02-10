@@ -48,7 +48,7 @@ function render(videos) {
             <a href='${videos[i]}' target='_blank'>
                 ${videos[i]}
             </a>
-            <button onclick="linkParseToPython('${videos[i]}')">Download</button>
+            <button onclick="downloadVideo('${videos[i]}')">Download</button>
         </li>
         ` 
     }
@@ -56,24 +56,36 @@ function render(videos) {
 }
 
 //Download link parsing to python 
-function linkParseToPython(videoLink) {
-    
+function downloadVideo(videoLink) {
     console.log(videoLink)
-    fetch('http://127.0.0.1:5500/download.py', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(videoLink),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        // Handle the response from Python if needed
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    fetch(videoLink)
+    .then(response => response.blob())
+    .then(blob => {
+        // Create a link element
+        const link = document.createElement('a');
+
+        // Create a Blob URL for the video blob
+        const url = URL.createObjectURL(blob);
+
+        // Set the link's href to the Blob URL
+        link.href = url;
+
+        // Set the download attribute with the desired file name
+        link.download = 'video.mp4';
+
+        // Append the link to the document
+        document.body.appendChild(link);
+
+        // Trigger a click on the link to start the download
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+  })
+  .catch(error => {
+    console.error('Error downloading video:', error);
+  });
+
 }
 
 
