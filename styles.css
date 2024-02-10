@@ -17,6 +17,7 @@ li {
     list-style-type: none;
     display: flex;
     margin-top: 0.5rem;
+    align-items: center;
 }
 
 .flexxy {
@@ -31,6 +32,7 @@ ul {
 a {
     /* color: #5f9341; */
     color: lightseagreen;
+    margin: 0.5rem;
 }
 
 a:visited {
@@ -48,6 +50,8 @@ a:visited {
 h1 {
     font-size: medium;
 }
+
+
 
 #box {
     color: white;

@@ -1,5 +1,6 @@
 import os
-import sys
+from flask import Flask, request, jsonify
+import subprocess
 from pytube import YouTube
 
 def Download(link):
@@ -16,11 +17,19 @@ def Download(link):
 #link = input("Enter the YouTube video URL: ")
 #Download(link)
 
-data_to_pass_back = "Send this to node process"
+app = Flask(__name__)
 
-input = sys.argv[1]
-output = data_to_pass_back
-print(output)
+@app.route('download.py', methods=['POST'])
+def run_python_script():
+    data_to_pass_in = request.json['data']
+
+    # Run your Python script with the received data
+    result = subprocess.check_output(['python3', './download.py', data_to_pass_in], text=True)
+
+    return jsonify({'result': result})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 

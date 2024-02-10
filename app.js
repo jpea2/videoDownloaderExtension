@@ -20,6 +20,7 @@ clearInputBtn.addEventListener("click", function() {
 })
 
 
+
 //.innerHTMl comes at a cost. So do we want it done once or for     
 //each time in the loop? Thats why we can set it once at the end of the loop
 
@@ -43,14 +44,38 @@ function render(videos) {
     // start // finish // increment
     for (i = 0; i < videos.length; i++){
         listItems += `
-        <li>
+        <li class>
             <a href='${videos[i]}' target='_blank'>
-                ${videos[i]} 
+                ${videos[i]}
             </a>
-        </li>` 
+            <button onclick="linkParseToPython('${videos[i]}')">Download</button>
+        </li>
+        ` 
     }
     ulEl.innerHTML = listItems
 }
+
+//Download link parsing to python 
+function linkParseToPython(videoLink) {
+    
+    console.log(videoLink)
+    fetch('http://127.0.0.1:5500/download.py', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(videoLink),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Handle the response from Python if needed
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
 
 //deletes local storage of saved links
 deleteBtn.addEventListener("dblclick", function(){
