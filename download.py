@@ -1,4 +1,5 @@
 import os
+import sys
 from pytube import YouTube
 
 def Download(link):
@@ -12,5 +13,14 @@ def Download(link):
     print("Download is completed successfully")
 
 
-link = input("Enter the YouTube video URL: ")
-Download(link)
+#link = input("Enter the YouTube video URL: ")
+#Download(link)
+
+data_to_pass_back = "Send this to node process"
+
+input = sys.argv[1]
+output = data_to_pass_back
+print(output)
+
+
+

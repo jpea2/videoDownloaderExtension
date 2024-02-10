@@ -73,3 +73,5 @@ inputBtn.addEventListener("click", function () {
 render(myVideos)
 
 console.log(storedVideosLocal)
+
+
