@@ -3,13 +3,7 @@ from pytube import YouTube
 import os
 
 
-data_to_pass_back = "Python Received"
-
 input = sys.argv[1]
-output = data_to_pass_back
-
-print(output)
-print(input)
 
 def Download(input):
     youtubeObject = YouTube(input)
@@ -23,4 +17,9 @@ def Download(input):
     print("Download is completed successfully")
 
 
+data_to_pass_back = "Python Received"
+output = data_to_pass_back
+print(output)
+
 Download(input)
+
