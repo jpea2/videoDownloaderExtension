@@ -7,7 +7,6 @@ const deleteBtn = document.querySelector("#delete-btn")
 const inputTabBtn = document.querySelector("#input-tab-btn")
 const storedVideosLocal = JSON.parse(localStorage.getItem("myVideos"))
 const autoAddTab = document.querySelector("#auto-add-tab-btn")
-import { spawn as spawner } from 'child_process';
 
 
 if (storedVideosLocal) {
@@ -57,19 +56,25 @@ function render(videos) {
     ulEl.innerHTML = listItems
 }
 
+//import { spawn } from 'node:child_process'
 
 function downloadVideo(videoLink) {
     console.log(videoLink)
 
-    const data_to_pass_in = 'Send this to python';
+    const data_to_pass_in = videoLink;
 
     console.log('Data Sent to Python', data_to_pass_in);
-
-    const python_process = spawner('python3', ['download.py', data_to_pass_in]);
+    $.ajax({
+        type: "POST",
+        url: "download.py",
+        data: { param: videoLink },
+        success: callbackFunc
+    });
+    /*const python_process = spawner('python3', ['download.py', data_to_pass_in]);
 
     python_process.stdout.on('data', (data) => {
         console.log('Data received from python script', data.toString());
-    });
+    }); */
 }
 
 
