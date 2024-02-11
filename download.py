@@ -3,21 +3,24 @@ from pytube import YouTube
 import os
 
 
-data_to_pass_back = "Send to node process."
+data_to_pass_back = "Python Received"
 
 input = sys.argv[1]
 output = data_to_pass_back
-url = input
 
-def Download(link):
-    youtubeObject = YouTube(link)
+print(output)
+print(input)
+
+def Download(input):
+    youtubeObject = YouTube(input)
     youtubeObject = youtubeObject.streams.get_highest_resolution()
     try:
         download_path = os.path.expanduser('~/Downloads')
         youtubeObject.download(download_path)
+        print("should be working..")
     except:
         print("An error has occurred")
     print("Download is completed successfully")
 
 
-Download(url)
+Download(input)

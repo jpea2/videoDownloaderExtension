@@ -40,10 +40,12 @@ inputTabBtn.addEventListener("click", function() {
     })
 })
 
+
+
 function render(videos) {
     let listItems = ""
     // start // finish // increment
-    for (i = 0; i < videos.length; i++){
+    for (let i = 0; i < videos.length; i++){
         listItems += `
         <li class>
             <a href='${videos[i]}' target='_blank'>
